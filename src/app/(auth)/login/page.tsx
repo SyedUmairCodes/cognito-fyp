@@ -1,10 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormSchema } from "@/lib/types";
-import { SubmitHandler, useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -14,9 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
-import Loader from "@/components/global/Loader";
+import Image from "next/image";
+import Logo from "../../../../public/cypresslogo.svg";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Loader from "@/components/global/Loader";
+import { Separator } from "@/components/ui/separator";
 import { actionLoginUser } from "@/lib/server-actions/auth-actions";
 
 const LoginPage = () => {
@@ -56,16 +59,16 @@ const LoginPage = () => {
           className="
           w-full
           flex
-          justify-left    
+          justify-left
           items-center"
         >
-          <h1 className="text-4xl font-semibold dark:text-white align-center">
-            Cognito
-          </h1>
+          <Image src={Logo} alt="cypress Logo" width={50} height={50} />
           <span
             className="font-semibold
           dark:text-white text-4xl first-letter:ml-2"
-          ></span>
+          >
+            cypress.
+          </span>
         </Link>
         <FormDescription
           className="

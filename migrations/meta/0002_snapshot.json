@@ -1,9 +1,75 @@
 {
-  "id": "878860d1-2065-4dc9-9b4a-a46e774ff0fa",
-  "prevId": "4c490114-c77b-4056-882e-e2e73309e38a",
+  "id": "d35fe5f4-bace-494c-8840-ff3ab7645c4c",
+  "prevId": "0a5ff297-0157-43bd-9ac4-da8b882062be",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.collaborators": {
+      "name": "collaborators",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "workspaceid": {
+          "name": "workspaceid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "userid": {
+          "name": "userid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "collaborators_workspaceid_workspaces_id_fk": {
+          "name": "collaborators_workspaceid_workspaces_id_fk",
+          "tableFrom": "collaborators",
+          "tableTo": "workspaces",
+          "columnsFrom": [
+            "workspaceid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "collaborators_userid_users_id_fk": {
+          "name": "collaborators_userid_users_id_fk",
+          "tableFrom": "collaborators",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.files": {
       "name": "files",
       "schema": "",
@@ -28,8 +94,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "icon_id": {
-          "name": "icon_id",
+        "iconid": {
+          "name": "iconid",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -40,26 +106,26 @@
           "primaryKey": false,
           "notNull": false
         },
-        "in_trash": {
-          "name": "in_trash",
+        "intrash": {
+          "name": "intrash",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "banner_url": {
-          "name": "banner_url",
+        "bannerurl": {
+          "name": "bannerurl",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "workspace_id": {
-          "name": "workspace_id",
+        "workspaceid": {
+          "name": "workspaceid",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "folder_id": {
-          "name": "folder_id",
+        "folderid": {
+          "name": "folderid",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -67,12 +133,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "files_workspace_id_workspaces_id_fk": {
-          "name": "files_workspace_id_workspaces_id_fk",
+        "files_workspaceid_workspaces_id_fk": {
+          "name": "files_workspaceid_workspaces_id_fk",
           "tableFrom": "files",
           "tableTo": "workspaces",
           "columnsFrom": [
-            "workspace_id"
+            "workspaceid"
           ],
           "columnsTo": [
             "id"
@@ -80,12 +146,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "files_folder_id_folders_id_fk": {
-          "name": "files_folder_id_folders_id_fk",
+        "files_folderid_folders_id_fk": {
+          "name": "files_folderid_folders_id_fk",
           "tableFrom": "files",
           "tableTo": "folders",
           "columnsFrom": [
-            "folder_id"
+            "folderid"
           ],
           "columnsTo": [
             "id"
@@ -95,7 +161,10 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.folders": {
       "name": "folders",
@@ -121,8 +190,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "icon_id": {
-          "name": "icon_id",
+        "iconid": {
+          "name": "iconid",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -133,20 +202,20 @@
           "primaryKey": false,
           "notNull": false
         },
-        "in_trash": {
-          "name": "in_trash",
+        "intrash": {
+          "name": "intrash",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "banner_url": {
-          "name": "banner_url",
+        "bannerurl": {
+          "name": "bannerurl",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "workspace_id": {
-          "name": "workspace_id",
+        "workspaceid": {
+          "name": "workspaceid",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -154,12 +223,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "folders_workspace_id_workspaces_id_fk": {
-          "name": "folders_workspace_id_workspaces_id_fk",
+        "folders_workspaceid_workspaces_id_fk": {
+          "name": "folders_workspaceid_workspaces_id_fk",
           "tableFrom": "folders",
           "tableTo": "workspaces",
           "columnsFrom": [
-            "workspace_id"
+            "workspaceid"
           ],
           "columnsTo": [
             "id"
@@ -169,7 +238,122 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.subscriptions": {
+      "name": "subscriptions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "subscription_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price_id": {
+          "name": "price_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cancel_at_period_end": {
+          "name": "cancel_at_period_end",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created": {
+          "name": "created",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "current_period_start": {
+          "name": "current_period_start",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "current_period_end": {
+          "name": "current_period_end",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "ended_at": {
+          "name": "ended_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "cancel_at": {
+          "name": "cancel_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "canceled_at": {
+          "name": "canceled_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "trial_start": {
+          "name": "trial_start",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "trial_end": {
+          "name": "trial_end",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.workspaces": {
       "name": "workspaces",
@@ -186,10 +370,11 @@
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
-        "workspace_owner": {
-          "name": "workspace_owner",
+        "workspaceowner": {
+          "name": "workspaceowner",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -200,8 +385,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "iconId": {
-          "name": "iconId",
+        "iconid": {
+          "name": "iconid",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -212,8 +397,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "inTrash": {
-          "name": "inTrash",
+        "intrash": {
+          "name": "intrash",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -224,8 +409,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "banner_url": {
-          "name": "banner_url",
+        "bannerurl": {
+          "name": "bannerurl",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -234,12 +419,18 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {},
   "schemas": {},
   "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
   "_meta": {
     "columns": {},
     "schemas": {},

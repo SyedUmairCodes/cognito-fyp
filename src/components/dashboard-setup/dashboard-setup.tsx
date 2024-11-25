@@ -1,29 +1,29 @@
 "use client";
 import { AuthUser } from "@supabase/supabase-js";
 import React, { useState } from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { v4 } from "uuid";
+
 import {
   Card,
-  CardDescription,
-  CardTitle,
-  CardHeader,
   CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "../ui/card";
-import { Button } from "../ui/button";
-import Loader from "../global/Loader";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import EmojiPicker from "../global/emoji-picker";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { Subscription, workspace } from "@/lib/supabase/supabase.types";
+import { Button } from "../ui/button";
+import Loader from "../global/Loader";
 import { createWorkspace } from "@/lib/supabase/queries";
-import { z } from "zod";
-import { useAppState } from "@/lib/providers/state-provider";
-
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
-import { Subscription, workspace } from "@/lib/supabase/supabase.types";
+import { useAppState } from "@/lib/providers/state-provider";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { CreateWorkspaceFormSchema } from "@/lib/types";
-import { v4 } from "uuid";
+import { string, z } from "zod";
 
 interface DashboardSetupProps {
   user: AuthUser;
@@ -31,8 +31,8 @@ interface DashboardSetupProps {
 }
 
 const DashboardSetup: React.FC<DashboardSetupProps> = ({
-  user,
   subscription,
+  user,
 }) => {
   const { toast } = useToast();
   const router = useRouter();
@@ -56,14 +56,14 @@ const DashboardSetup: React.FC<DashboardSetupProps> = ({
     z.infer<typeof CreateWorkspaceFormSchema>
   > = async (value) => {
     const file = value.logo?.[0];
-    let filePath = null;
+    let filePath = "";
     const workspaceUUID = v4();
     console.log(file);
 
     if (file) {
       try {
         const { data, error } = await supabase.storage
-          .from("workspace-logos")
+          .from("logos")
           .upload(`workspaceLogo.${workspaceUUID}`, file, {
             cacheControl: "3600",
             upsert: true,
@@ -117,11 +117,13 @@ const DashboardSetup: React.FC<DashboardSetupProps> = ({
       reset();
     }
   };
+
   return (
     <Card
       className="w-[800px]
-    h-screen
-    sm:h-auto"
+      h-screen
+      sm:h-auto
+  "
     >
       <CardHeader>
         <CardTitle>Create A Workspace</CardTitle>
@@ -131,83 +133,81 @@ const DashboardSetup: React.FC<DashboardSetupProps> = ({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-4">
-              <div
-                className="flex
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-4">
+            <div
+              className="flex
             items-center
             gap-4"
-              >
-                <div className="text-5xl">
-                  <EmojiPicker getValue={(emoji) => setSelectedEmoji(emoji)}>
-                    {selectedEmoji}
-                  </EmojiPicker>
-                </div>
-                <div className="w-full ">
-                  <Label
-                    htmlFor="workspaceName"
-                    className="text-sm
-                  text-muted-foreground
-                "
-                  >
-                    Name
-                  </Label>
-                  <Input
-                    id="workspaceName"
-                    type="text"
-                    placeholder="Workspace Name"
-                    disabled={isLoading}
-                    {...register("workspaceName", {
-                      required: "Workspace name is required",
-                    })}
-                  />
-                  <small className="text-red-600">
-                    {errors?.workspaceName?.message?.toString()}
-                  </small>
-                </div>
+            >
+              <div className="text-5xl">
+                <EmojiPicker getValue={(emoji) => setSelectedEmoji(emoji)}>
+                  {selectedEmoji}
+                </EmojiPicker>
               </div>
-              <div>
+              <div className="w-full ">
                 <Label
-                  htmlFor="logo"
+                  htmlFor="workspaceName"
                   className="text-sm
                   text-muted-foreground
                 "
                 >
-                  Workspace Logo
+                  Name
                 </Label>
                 <Input
-                  id="logo"
-                  type="file"
-                  accept="image/*"
+                  id="workspaceName"
+                  type="text"
                   placeholder="Workspace Name"
-                  // disabled={isLoading || subscription?.status !== 'active'}
-                  {...register("logo", {
-                    required: false,
+                  disabled={isLoading}
+                  {...register("workspaceName", {
+                    required: "Workspace name is required",
                   })}
                 />
                 <small className="text-red-600">
-                  {errors?.logo?.message?.toString()}
+                  {errors?.workspaceName?.message?.toString()}
                 </small>
-                {subscription?.status !== "active" && (
-                  <small
-                    className="
+              </div>
+            </div>
+            <div>
+              <Label
+                htmlFor="logo"
+                className="text-sm
+                  text-muted-foreground
+                "
+              >
+                Workspace Logo
+              </Label>
+              <Input
+                id="logo"
+                type="file"
+                accept="image/*"
+                placeholder="Workspace Name"
+                disabled={isLoading || subscription?.status !== "active"}
+                {...register("logo", {
+                  required: false,
+                })}
+              />
+              <small className="text-red-600">
+                {errors?.logo?.message?.toString()}
+              </small>
+              {subscription?.status !== "active" && (
+                <small
+                  className="
                   text-muted-foreground
                   block
               "
-                  >
-                    To customize your workspace, you need to be on a Pro Plan
-                  </small>
-                )}{" "}
-              </div>
-              <div className="self-end">
-                <Button disabled={isLoading} type="submit">
-                  {!isLoading ? "Create Workspace" : <Loader />}
-                </Button>
-              </div>
+                >
+                  To customize your workspace, you need to be on a Pro Plan
+                </small>
+              )}
             </div>
-          </form>
-        </CardContent>
+            <div className="self-end">
+              <Button disabled={isLoading} type="submit">
+                {!isLoading ? "Create Workspace" : <Loader />}
+              </Button>
+            </div>
+          </div>
+        </form>
       </CardContent>
     </Card>
   );

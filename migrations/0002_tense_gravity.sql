@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS "collaborators" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"workspaceid" uuid NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"userid" uuid NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "subscriptions" (
 	"id" text PRIMARY KEY NOT NULL,
 	"user_id" uuid NOT NULL,
@@ -16,15 +23,14 @@ CREATE TABLE IF NOT EXISTS "subscriptions" (
 	"trial_end" timestamp with time zone DEFAULT now()
 );
 --> statement-breakpoint
-ALTER TABLE "workspaces" RENAME COLUMN "iconId" TO "icon_id";--> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "collaborators" ADD CONSTRAINT "collaborators_workspaceid_workspaces_id_fk" FOREIGN KEY ("workspaceid") REFERENCES "public"."workspaces"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_price_id_prices_id_fk" FOREIGN KEY ("price_id") REFERENCES "public"."prices"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "collaborators" ADD CONSTRAINT "collaborators_userid_users_id_fk" FOREIGN KEY ("userid") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

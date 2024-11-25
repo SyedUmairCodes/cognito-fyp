@@ -5,8 +5,8 @@ interface LayoutProps {
   params: any;
 }
 
-const Layout: React.FC<LayoutProps> = async ({ children, params }) => {
-  return <main className="flex over-hidden h-screen">{children}</main>;
+const Layout: React.FC<LayoutProps> = ({ children, params }) => {
+  return <main className="flex overflow-hidden h-100%">{children}</main>;
 };
 
 export default Layout;

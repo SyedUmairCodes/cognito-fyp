@@ -1,67 +1,70 @@
-"use client";
-import Link from "next/link";
-import React, { useState } from "react";
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import Logo from '../../../public/cypresslogo.svg';
 
 import {
   NavigationMenu,
   NavigationMenuContent,
+  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
+} from '@/components/ui/navigation-menu';
+import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
 
 const routes = [
-  { title: "Features", href: "#features" },
-  { title: "Reasources", href: "#resources" },
-  { title: "Pricing", href: "#pricing" },
-  { title: "Testimonials", href: "#testimonial" },
+  { title: 'Features', href: '#features' },
+  { title: 'Reasources', href: '#resources' },
+  { title: 'Pricing', href: '#pricing' },
+  { title: 'Testimonials', href: '#testimonial' },
 ];
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Alert Dialog",
-    href: "#",
+    title: 'Alert Dialog',
+    href: '#',
     description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
+      'A modal dialog that interrupts the user with important content and expects a response.',
   },
   {
-    title: "Hover Card",
-    href: "#",
+    title: 'Hover Card',
+    href: '#',
     description:
-      "For sighted users to preview content available behind a link.",
+      'For sighted users to preview content available behind a link.',
   },
   {
-    title: "Progress",
-    href: "#",
+    title: 'Progress',
+    href: '#',
     description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+      'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
   },
   {
-    title: "Scroll-area",
-    href: "#",
-    description: "Visually or semantically separates content.",
+    title: 'Scroll-area',
+    href: '#',
+    description: 'Visually or semantically separates content.',
   },
   {
-    title: "Tabs",
-    href: "#",
+    title: 'Tabs',
+    href: '#',
     description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+      'A set of layered sections of content—known as tab panels—that are displayed one at a time.',
   },
   {
-    title: "Tooltip",
-    href: "#",
+    title: 'Tooltip',
+    href: '#',
     description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+      'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
   },
 ];
 
 const Header = () => {
-  const [path, setPath] = useState("#products");
+  const [path, setPath] = useState('#products');
   return (
     <header
       className="p-4
@@ -71,28 +74,34 @@ const Header = () => {
   "
     >
       <Link
-        href={"/"}
+        href={'/'}
         className="w-full flex gap-2
         justify-left items-center"
       >
-        <h1
+        <Image
+          src={Logo}
+          alt="Cypress Logo"
+          width={25}
+          height={25}
+        />
+        <span
           className="font-semibold
-          dark:text-white text-2xl
+          dark:text-white
         "
         >
-          Cognito
-        </h1>
+          cypress.
+        </span>
       </Link>
       <NavigationMenu className="hidden md:block">
         <NavigationMenuList className="gap-6">
           <NavigationMenuItem>
             <NavigationMenuTrigger
-              onClick={() => setPath("#resources")}
+              onClick={() => setPath('#resources')}
               className={cn({
-                "dark:text-white": path === "#resources",
-                "dark:text-white/40": path !== "#resources",
-                "font-normal": true,
-                "text-xl": true,
+                'dark:text-white': path === '#resources',
+                'dark:text-white/40': path !== '#resources',
+                'font-normal': true,
+                'text-xl': true,
               })}
             >
               Resources
@@ -124,13 +133,22 @@ const Header = () => {
                     Welcome
                   </span>
                 </li>
-                <ListItem href="#" title="Introduction">
+                <ListItem
+                  href="#"
+                  title="Introduction"
+                >
                   Re-usable components built using Radix UI and Tailwind CSS.
                 </ListItem>
-                <ListItem href="#" title="Installation">
+                <ListItem
+                  href="#"
+                  title="Installation"
+                >
                   How to install dependencies and structure your app.
                 </ListItem>
-                <ListItem href="#" title="Typography">
+                <ListItem
+                  href="#"
+                  title="Typography"
+                >
                   Styles for headings, paragraphs, lists...etc
                 </ListItem>
               </ul>
@@ -138,22 +156,28 @@ const Header = () => {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuTrigger
-              onClick={() => setPath("#pricing")}
+              onClick={() => setPath('#pricing')}
               className={cn({
-                "dark:text-white": path === "#pricing",
-                "dark:text-white/40": path !== "#pricing",
-                "font-normal": true,
-                "text-xl": true,
+                'dark:text-white': path === '#pricing',
+                'dark:text-white/40': path !== '#pricing',
+                'font-normal': true,
+                'text-xl': true,
               })}
             >
               Pricing
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4  md:grid-row-2  ">
-                <ListItem title="Pro Plan" href={"#"}>
+                <ListItem
+                  title="Pro Plan"
+                  href={'#'}
+                >
                   Unlock full power with collaboration.
                 </ListItem>
-                <ListItem title={"free Plan"} href={"#"}>
+                <ListItem
+                  title={'free Plan'}
+                  href={'#'}
+                >
                   Great for teams just starting out.
                 </ListItem>
               </ul>
@@ -185,10 +209,10 @@ const Header = () => {
           <NavigationMenuItem>
             <NavigationMenuLink
               className={cn(navigationMenuTriggerStyle(), {
-                "dark:text-white": path === "#testimonials",
-                "dark:text-white/40": path !== "#testimonials",
-                "font-normal": true,
-                "text-xl": true,
+                'dark:text-white': path === '#testimonials',
+                'dark:text-white/40': path !== '#testimonials',
+                'font-normal': true,
+                'text-xl': true,
               })}
             >
               Testimonial
@@ -203,13 +227,19 @@ const Header = () => {
         justify-end
       "
       >
-        <Link href={"/login"}>
-          <Button variant="btn-secondary" className=" p-1 hidden sm:block">
+        <Link href={'/login'}>
+          <Button
+            variant="btn-secondary"
+            className=" p-1 hidden sm:block"
+          >
             Login
           </Button>
         </Link>
         <Link href="/signup">
-          <Button variant="btn-primary" className="whitespace-nowrap">
+          <Button
+            variant="btn-primary"
+            className="whitespace-nowrap"
+          >
             Sign Up
           </Button>
         </Link>
@@ -221,8 +251,8 @@ const Header = () => {
 export default Header;
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -230,7 +260,7 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "group block select-none space-y-1 font-medium leading-none"
+            'group block select-none space-y-1 font-medium leading-none'
           )}
           {...props}
         >
@@ -253,4 +283,4 @@ const ListItem = React.forwardRef<
   );
 });
 
-ListItem.displayName = "ListItem";
+ListItem.displayName = 'ListItem';

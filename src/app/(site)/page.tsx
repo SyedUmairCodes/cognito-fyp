@@ -1,25 +1,22 @@
-import React from "react";
 import TitleSection from "@/components/landing-page/title-section";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import React from "react";
 import Banner from "../../../public/appBanner.png";
-import { CLIENTS, PRICING_CARDS, PRICING_PLANS, USERS } from "@/lib/constants";
 import Cal from "../../../public/cal.png";
 import Diamond from "../../../public/icons/diamond.svg";
 import CheckIcon from "../../../public/icons/check.svg";
-import CustomCard from "@/components/landing-page/custom-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
+import { CLIENTS, PRICING_CARDS, PRICING_PLANS, USERS } from "@/lib/constants";
 import { randomUUID } from "crypto";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-import Header from "@/components/landing-page/header";
-import Footer from "@/components/landing-page/footer";
+import CustomCard from "@/components/landing-page/custom-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
+
 const HomePage = () => {
   return (
     <>
-      <Header />
-      {/* Hero Section */}
       <section
         className=" overflow-hidden
       px-4
@@ -32,8 +29,8 @@ const HomePage = () => {
       md:items-center"
       >
         <TitleSection
-          pill="The next-gen collabortive experience"
-          title="All in one collabortion and productivity platform"
+          pill="✨ Your Workspace, Perfected"
+          title="All-In-One Collaboration and Productivity Platform"
         />
         <div
           className="bg-white
@@ -42,12 +39,12 @@ const HomePage = () => {
           rounded-xl
           bg-gradient-to-r
           from-primary
-          to-brand-washedBlue
+          to-brand-primaryBlue
           sm:w-[300px]
         "
         >
           <Button
-            variant="btn-secondary"
+            variant="btn-primary"
             className=" w-full
             rounded-[10px]
             p-6
@@ -55,7 +52,7 @@ const HomePage = () => {
             bg-background
           "
           >
-            Get Started
+            Get Cypress Free
           </Button>
         </div>
         <div
@@ -85,7 +82,6 @@ const HomePage = () => {
           ></div>
         </div>
       </section>
-      {/* Clients section */}
       <section className="relative">
         <div
           className="overflow-hidden
@@ -146,7 +142,6 @@ const HomePage = () => {
           ))}
         </div>
       </section>
-      {/* Features section */}
       <section
         className="px-4
         sm:px-6
@@ -190,7 +185,6 @@ const HomePage = () => {
           <Image src={Cal} alt="Banner" className="rounded-2xl" />
         </div>
       </section>
-      {/* Testimonial section */}
       <section className="relative">
         <div
           className="w-full
@@ -273,7 +267,6 @@ const HomePage = () => {
           ))}
         </div>
       </section>
-      {/* Pricing section */}
       <section
         className="mt-20
         px-4
@@ -388,9 +381,6 @@ const HomePage = () => {
             />
           ))}
         </div>
-      </section>
-      <section>
-        <Footer />
       </section>
     </>
   );
